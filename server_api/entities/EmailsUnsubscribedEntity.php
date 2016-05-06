@@ -1,6 +1,7 @@
 <?php
 
-class EmailsUnsubscribedEntity extends Entity {
+class EmailsUnsubscribedEntity extends Entity
+{
     public static $table = 'emails_unsubscribed';
 
     public function __construct($tableName = 'emails_unsubscribed')

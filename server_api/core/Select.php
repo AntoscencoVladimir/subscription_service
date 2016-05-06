@@ -33,7 +33,7 @@ class Select
                     $from .= substr($fields[$i], 0, $pos_1) . '(`' . substr($fields[$i], $pos_1 + 1,
                             $pos_2 - $pos_1 - 1) . "`),";
                 } else {
-                    if (strpos($fields[$i], '.') !== false){
+                    if (strpos($fields[$i], '.') !== false) {
                         $separatedFields = explode('.', $fields[$i]);
                         $wrappedField = '';
                         foreach ($separatedFields as $field) {
@@ -49,7 +49,7 @@ class Select
             }
             $from = substr($from, 0, -1);
         }
-        $tables ='';
+        $tables = '';
         if (is_array($tableNames)) {
             foreach ($tableNames as $tableName) {
                 $tableName = $this->db->getTableName($tableName);
@@ -61,7 +61,7 @@ class Select
             $tables .= " `$tableName`";
         }
 
-        $from .= ' FROM '. $tables;
+        $from .= ' FROM ' . $tables;
         $this->from = $from;
 
         return $this;
@@ -113,31 +113,39 @@ class Select
         return $ret;
     }
 
-    public function order($field, $ask = true) {
+    public function order($field, $ask = true)
+    {
         if (is_array($field)) {
             $this->order = "ORDER BY ";
             if (!is_array($ask)) {
                 $temp = array();
-                for ($i = 0; $i < count($field); $i++) $temp[] = $ask;
+                for ($i = 0; $i < count($field); $i++) {
+                    $temp[] = $ask;
+                }
                 $ask = $temp;
             }
             for ($i = 0; $i < count($field); $i++) {
-                $this->order .= "`".$field[$i]."`";
-                if (!$ask[$i]) $this->order .= " DESC,";
-                else $this->order .= ",";
+                $this->order .= "`" . $field[$i] . "`";
+                if (!$ask[$i]) {
+                    $this->order .= " DESC,";
+                } else {
+                    $this->order .= ",";
+                }
             }
             $this->order = substr($this->order, 0, -1);
-        }
-        else {
+        } else {
             $this->order = "ORDER BY `$field`";
-            if (!$ask) $this->order .= " DESC";
+            if (!$ask) {
+                $this->order .= " DESC";
+            }
         }
         return $this;
     }
 
-    public function whereIn($field, $values, $and = true) {
+    public function whereIn($field, $values, $and = true)
+    {
         $where = "`$field` IN (";
-        $where .= str_repeat($this->db->getSq().",", count($values));
+        $where .= str_repeat($this->db->getSq() . ",", count($values));
         $where = substr($where, 0, -1);
         $where .= ")";
         return $this->where($where, $values, $and);

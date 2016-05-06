@@ -167,16 +167,27 @@ class Entity
         return self::getAllWithOrder($class::$table, $class, 'id', true, $count, $offset);
     }
 
-    public static function countAll() {
+    public static function countAll()
+    {
         $class = get_called_class();
         return self::getCountOnWhere($class::$table, false, false);
     }
 
-    protected static function countAllByField($tableName, $field, $value) {
-        return self::getCountOnWhere($tableName, "`$field` = ".self::$db->getSq(), [$value]);
+    protected static function countAllByField($tableName, $field, $value)
+    {
+        return self::getCountOnWhere($tableName, "`$field` = " . self::$db->getSq(), [$value]);
     }
 
-    protected static function findAllBy($tableName, $class, $where = false, $values = false, $order = false, $ask = true, $count = false, $offset = false) {
+    protected static function findAllBy(
+        $tableName,
+        $class,
+        $where = false,
+        $values = false,
+        $order = false,
+        $ask = true,
+        $count = false,
+        $offset = false
+    ) {
         $select = new Select(self::$db);
         $select->from($tableName, "*");
         if ($where) {
@@ -184,8 +195,7 @@ class Entity
         }
         if ($order) {
             $select->order($order, $ask);
-        }
-        else {
+        } else {
             $select->order("id");
         }
         if ($count) {
@@ -196,7 +206,8 @@ class Entity
         return Entity::createCollection($class, $data);
     }
 
-    protected static function getCountOnWhere($tableName, $where = false, $values = false) {
+    protected static function getCountOnWhere($tableName, $where = false, $values = false)
+    {
         $select = new Select(self::$db);
         $select->from($tableName, ["COUNT(id)"]);
         if ($where) {
@@ -220,7 +231,16 @@ class Entity
             $count, $offset);
     }
 
-    protected static function getAllOnWhere($table_name, $class, $where = false, $values = false, $order = false, $ask = true, $count = false, $offset = false) {
+    protected static function getAllOnWhere(
+        $table_name,
+        $class,
+        $where = false,
+        $values = false,
+        $order = false,
+        $ask = true,
+        $count = false,
+        $offset = false
+    ) {
         $select = new Select(self::$db);
         $select->from($table_name, "*");
         if ($where) {
@@ -228,8 +248,7 @@ class Entity
         }
         if ($order) {
             $select->order($order, $ask);
-        }
-        else {
+        } else {
             $select->order("id");
         }
         if ($count) {
@@ -242,18 +261,22 @@ class Entity
         return [];
     }
 
-    protected function findOneByField($field, $value) {
+    protected function findOneByField($field, $value)
+    {
         $select = new Select(self::$db);
         $select->from($this->table_name, "*")
-            ->where ("`$field` = ".self::$db->getSQ(), array($value));
+            ->where("`$field` = " . self::$db->getSQ(), array($value));
         $row = self::$db->selectRow($select);
         if ($row) {
-            if ($this->init($row)) return $this->postLoad();
+            if ($this->init($row)) {
+                return $this->postLoad();
+            }
         }
         return false;
     }
 
-    public static function findByIds($ids, $field) {
+    public static function findByIds($ids, $field)
+    {
         $class = get_called_class();
         $select = new Select(self::$db);
         $select->from($class::$table, "*")
@@ -262,39 +285,48 @@ class Entity
         return Entity::createCollection($class, $data);
     }
 
-    protected function preInsert() {
+    protected function preInsert()
+    {
         return true;
     }
 
-    protected function postInsert() {
+    protected function postInsert()
+    {
         return true;
     }
 
-    protected function preUpdate() {
+    protected function preUpdate()
+    {
         return true;
     }
 
-    protected function postUpdate() {
+    protected function postUpdate()
+    {
         return true;
     }
 
-    protected function preDelete() {
+    protected function preDelete()
+    {
         return true;
     }
 
-    protected function postDelete() {
+    protected function postDelete()
+    {
         return true;
     }
 
-    protected function postInit() {
+    protected function postInit()
+    {
         return true;
     }
 
-    protected function postLoad() {
+    protected function postLoad()
+    {
         return true;
     }
 
-    protected function add($field, $default = null, $type = null) {
+    protected function add($field, $default = null, $type = null)
+    {
         $this->properties[$field] = array("value" => $default, "type" => $type);
     }
 }

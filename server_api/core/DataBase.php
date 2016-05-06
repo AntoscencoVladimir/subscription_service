@@ -155,7 +155,8 @@ class DataBase
         return $this->query($query, $params);
     }
 
-    private function query($query, $params = false) {
+    private function query($query, $params = false)
+    {
         $success = $this->mysqli->query($this->getQuery($query, $params));
 
         if (!$success) {
@@ -169,9 +170,12 @@ class DataBase
         return $this->mysqli->insert_id;
     }
 
-    public function selectCell(Select $select) {
+    public function selectCell(Select $select)
+    {
         $result_set = $this->getResultSet($select, false, true);
-        if (!$result_set) return false;
+        if (!$result_set) {
+            return false;
+        }
         $arr = array_values($result_set->fetch_assoc());
         return $arr[0];
     }

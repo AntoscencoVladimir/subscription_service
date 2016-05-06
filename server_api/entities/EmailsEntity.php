@@ -13,9 +13,8 @@ class EmailsEntity extends Entity
     }
 
 
-    protected static function getEmailsForServer($limit, $clientId)
+    protected static function getEmailsForClient($limit, $clientId)
     {
-        $qs = Config::DB_SYM_QUERY;
         $select = new Select(self::$db);
         $select->from([self::$table, EmailsUnsubscribedEntity::$table], [
             self::$table . '.id',
@@ -24,10 +23,10 @@ class EmailsEntity extends Entity
             'reserved_date',
             EmailsUnsubscribedEntity::$table . '.id_email'
         ])
-            ->where(self::$table . '.reserved_server IS NULL '.
-                    'AND ' . self::$table . '.reserved_date IS NULL '.
-                    'AND ' . self::$table . '.id <> ' . EmailsUnsubscribedEntity::$table . '.id_email '
-                    )
+            ->where(self::$table . '.reserved_server IS NULL ' .
+                'AND ' . self::$table . '.reserved_date IS NULL ' .
+                'AND ' . self::$table . '.id <> ' . EmailsUnsubscribedEntity::$table . '.id_email '
+            )
             ->limit($limit);
 
         $data = self::$db->select($select);
@@ -38,10 +37,11 @@ class EmailsEntity extends Entity
         return [];
     }
 
-    public static function reserveEmailsForClient($limit, $clientId){
-        $collection = self::getEmailsForServer($limit, $clientId);
+    public static function reserveEmailsForClient($limit, $clientId)
+    {
+        $collection = self::getEmailsForClient($limit, $clientId);
         $emails = [];
-        if (!empty($collection)){
+        if (!empty($collection)) {
             foreach ($collection as $item) {
                 $item->reserved_server = $clientId;
                 $item->reserved_date = date('Y-m-d H:i:s');
@@ -49,7 +49,7 @@ class EmailsEntity extends Entity
                 $emails[] = $item->email;
             }
         }
-    
+
         return $emails;
     }
 }
