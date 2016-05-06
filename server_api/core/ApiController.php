@@ -19,35 +19,24 @@ class ApiController
     public function setEmailsAccessed($emailsData)
     {
 
-        //$data = json_decode(stripcslashes($emailsData),true);
+        $count = 0;
+        foreach ($emailsData as $emailData) {
+            $entity = new EmailsEntity();
+            if ($entity->findOneByField('email', $emailData['email'])) {
+                $emailAccessed = new EmailsAccessedEntity();
+                $emailAccessed->findOneByField('id_email', $entity->getId());
 
-       /* $array = [
-            "statistic" => [
-                [
-                    "country" => "MDA",
-                    "created" => "2016-05-06 12:12:12",
-                    "email" => "email1@spam4.me",
-                    "ip" => "127.0.0.1",
-                    "user_agent" => "chromium"
-                ],
-                [
-                    "country" => "USA",
-                    "created" => "2016-05-06 13:13:13",
-                    "email" => "email2@spam4.me",
-                    "ip" => "127.0.0.1",
-                    "user_agent" => "firefox"
-                ],
-                [
-                    "country" => "RU",
-                    "created" => "2016-05-06 11:11:11",
-                    "email" => "email3@spam4.me",
-                    "ip" => "127.0.0.1",
-                    "user_agent" => "opera"
-                ]
-            ]
-        ];*/
+                $emailAccessed->id_email = $entity->getId();
+                $emailAccessed->ip = $emailData['ip'];
+                $emailAccessed->country = $emailData['country'];
+                $emailAccessed->user_agent = $emailData['user_agent'];
+                $emailAccessed->created = date('Y-m-d H:i:s');
+                $emailAccessed->save();
+                $count++;
+            }
+        }
 
-        return $emailsData;
+        return $count;
     }
 
 }

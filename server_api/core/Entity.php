@@ -139,6 +139,12 @@ class Entity
         return array_key_exists($name, $this->properties) ? $this->properties[$name]['value'] : null;
     }
 
+    /**
+     * @param $class
+     * @param $data
+     * @return array
+     * @throws Exception
+     */
     public static function createCollection($class, $data)
     {
         $ret = [];
@@ -261,11 +267,11 @@ class Entity
         return [];
     }
 
-    protected function findOneByField($field, $value)
+    public function findOneByField($field, $value)
     {
         $select = new Select(self::$db);
-        $select->from($this->table_name, "*")
-            ->where("`$field` = " . self::$db->getSQ(), array($value));
+        $select->from($this->tableName, "*")
+            ->where("`$field` = " . self::$db->getSq(), [$value]);
         $row = self::$db->selectRow($select);
         if ($row) {
             if ($this->init($row)) {
