@@ -10,7 +10,7 @@ class View
         $this->dir_tmpl = $dir_tmpl;
     }
 
-    public function render($file, $params, $return = false)
+    public function render($file, $params = [], $return = false)
     {
         $template = $this->dir_tmpl . $file . ".php";
         extract($params);

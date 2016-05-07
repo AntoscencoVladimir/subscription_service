@@ -16,16 +16,16 @@ class EmailsEntity extends Entity
     protected static function getEmailsForClient($limit, $clientId)
     {
         $select = new Select(self::$db);
-        $select->from([self::$table, EmailsUnsubscribedEntity::$table], [
+        $select->from([self::$table], [
             self::$table . '.id',
             'email',
             'reserved_server',
             'reserved_date',
-            EmailsUnsubscribedEntity::$table . '.id_email'
         ])
+            ->leftJoin(EmailsUnsubscribedEntity::$table,[ self::$table . '.id' => EmailsUnsubscribedEntity::$table . '.id_email'])
             ->where(self::$table . '.reserved_server IS NULL ' .
                 'AND ' . self::$table . '.reserved_date IS NULL ' .
-                'AND ' . self::$table . '.id <> ' . EmailsUnsubscribedEntity::$table . '.id_email '
+                'AND ' . EmailsUnsubscribedEntity::$table . '.id_email IS NULL '
             )
             ->limit($limit);
 

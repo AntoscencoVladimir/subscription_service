@@ -7,6 +7,7 @@ class Select
     private $db;
     private $from = '';
     private $where = '';
+    private $join = '';
     private $limit = '';
     private $order = '';
 
@@ -90,6 +91,14 @@ class Select
         }
     }
 
+    public function leftJoin($table, $fieldPair)
+    {
+        reset($fieldPair);
+        $this->join = "LEFT JOIN `$table` ON `" . preg_replace('/\./', '`.`', key($fieldPair)) . "`=`" . preg_replace('/\./', '`.`',array_values($fieldPair)[0]) .'`' ;
+
+        return $this;
+    }
+
     public function limit($count, $offset = 0)
     {
         $count = (int)$count;
@@ -105,7 +114,7 @@ class Select
     public function __toString()
     {
         if ($this->from) {
-            $ret = 'SELECT ' . $this->from . ' ' . $this->where . ' ' . $this->order . ' ' . $this->limit;
+            $ret = 'SELECT ' . $this->from . ' ' . $this->join . ' ' . $this->where .' ' . $this->order . ' ' . $this->limit;
         } else {
             $ret = '';
         }

@@ -15,55 +15,8 @@
 
 require_once 'autoload.php';
 
-$data = [
-    "apikey" => "SECRET_KEY",
-    "action" => "set_emails_accessed",
-    "emails_accessed" => [
-        [
-            "country" => "MDA",
-            "created" => "2016-05-06 12:12:12",
-            "email" => "email1@spam4.me",
-            "ip" => "127.0.0.1",
-            "user_agent" => "chromium"
-        ],
-        [
-            "country" => "USA",
-            "created" => "2016 - 05 - 06 13:13:13",
-            "email" => "email2@spam4.me",
-            "ip" => "127.0.0.1",
-            "user_agent" => "firefox"
-        ],
-        [
-            "country" => "RU",
-            "created" => "2016 - 05 - 06 11:11:11",
-            "email" => "email3@spam4.me",
-            "ip" => "127.0.0.1",
-            "user_agent" => "opera"
-        ]
-    ]
-];
-
-$data_string = json_encode($data);
-
-$ch = curl_init('http://localhost/subscription_service/server_api/api.php');
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($data_string)
-    )
-);
-
-//$result = curl_exec($ch);
-//curl_close($ch);
-//print $result;
-
-/************************************************/
-
-$qry_str = "?apikey=SECRET_KEY&action=get_emails&limit=1&s=1";
-$ch = curl_init('http://localhost/subscription_service/server_api/api.php' . $qry_str);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//$content = curl_exec($ch);
-//curl_close($ch);
-//print $content;
+//$controller = new RequestApiController();
+//print $controller->getEmailsAction();
+//print $controller->sendAccessedStatisticAction();
+//print $controller->sendSendedEmailsStatisticAction();
+//print $controller->sendUnsubscribedStatisticAction();

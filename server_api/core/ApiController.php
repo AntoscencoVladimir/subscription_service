@@ -45,6 +45,7 @@ class ApiController
         $count = 0;
         foreach ($emailsData as $emailData) {
             $entity = new EmailsEntity();
+
             if ($entity->findOneByField('email', $emailData['email'])) {
                 $emailAccessed = new EmailsAccessedEntity();
                 $emailAccessed->findOneByField('id_email', $entity->getId());
