@@ -11,11 +11,13 @@
  * (емайлы для отсылки, данные о отсылки для учета переходов, статистика).
  * Статистика каждый час отправляет на главный сервер, очищая локальную базу.
  */
+//echo $_SERVER['HTTP_USER_AGENT'] . "\n\n";
 
+require_once 'autoload.php';
 
 $data = [
-    "apikey"=>"SECRET_KEY",
-    "action"=>"set_emails_accessed",
+    "apikey" => "SECRET_KEY",
+    "action" => "set_emails_accessed",
     "emails_accessed" => [
         [
             "country" => "MDA",
@@ -53,15 +55,15 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     )
 );
 
-$result = curl_exec($ch);
-curl_close($ch);
-print $result;
+//$result = curl_exec($ch);
+//curl_close($ch);
+//print $result;
 
 /************************************************/
 
 $qry_str = "?apikey=SECRET_KEY&action=get_emails&limit=1&s=1";
 $ch = curl_init('http://localhost/subscription_service/server_api/api.php' . $qry_str);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$content = curl_exec($ch);
-curl_close($ch);
-print $content;
+//$content = curl_exec($ch);
+//curl_close($ch);
+//print $content;

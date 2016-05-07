@@ -28,11 +28,11 @@ if ($request->hasProperty('apikey') && $request->apikey === Config::SECRET) {
                 $result['error'] = false;
                 break;
             case 'set_emails_sended':
-                $result['result'] = 'success';
+                $result['result'] = $api->setEmailsSended($request->emails_sended, $request->s);
                 $result['error'] = false;
                 break;
             case 'set_emails_unsubsribed':
-                $result['result'] = 'success';
+                $result['result'] = $api->setEmailsUnsubsribed($request->emails_unsubscribed);
                 $result['error'] = false;
                 break;
             default:

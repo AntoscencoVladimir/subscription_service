@@ -8,9 +8,12 @@ class Request
 
     public function __construct()
     {
-        if (empty($_REQUEST)){
-            $input = json_decode(file_get_contents('php://input'), true);
-            $this->data = $this->xss(array_merge($input, self::$sef_data));
+        if (empty($_REQUEST)) {
+            $inputContents = file_get_contents('php://input');
+            if (!empty($inputContents)) {
+                $input = json_decode($inputContents, true);
+                $this->data = $this->xss(array_merge($input, self::$sef_data));
+            }
         } else {
             $this->data = $this->xss(array_merge($_REQUEST, self::$sef_data));
         }

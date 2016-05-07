@@ -3,21 +3,21 @@
 class DataBase
 {
 
-    /** @var mysqli */
-    private $mysqli;
+    /** @var SQLite3 */
+    private $sqlite;
 
     /** @var  string */
     private $sq;
 
-    public function __construct($dbHost, $dbUser, $dbPassword, $dbName, $sq)
+    public function __construct($dbPath, $dbName, $sq)
     {
-        $this->mysqli = @new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
-        if ($this->mysqli->connect_errno) {
-            exit('Database mysqli connection error');
+        try {
+            $this->sqlite = new SQLite3($dbPath . '/' . $dbName);
+        } catch (Exception $exception) {
+            exit('Database sqlite3 connection error: ' . $exception->getMessage());
         }
+
         $this->sq = $sq;
-        $this->mysqli->query("SET lc_time_names='ru_RU'");
-        $this->mysqli->set_charset('utf8');
     }
 
     public function getSq()
@@ -36,7 +36,7 @@ class DataBase
                 if (is_null($params[$i])) {
                     $arg = 'NULL';
                 } else {
-                    $arg = "'" . $this->mysqli->real_escape_string($params[$i]) . "'";
+                    $arg = "'" . $this->sqlite->escapeString($params[$i]) . "'";
                 }
                 $query = substr_replace($query, $arg, $pos, $lenSq);
                 $offset = $pos + strlen($arg);
@@ -53,12 +53,13 @@ class DataBase
 
     public function select(Select $select)
     {
+
         $resultSet = $this->getResultSet($select, true, true);
         if (!$resultSet) {
             return false;
         }
-        $array = array();
-        while (($row = $resultSet->fetch_assoc()) != false) {
+        $array = [];
+        while (($row = $resultSet->fetchArray(SQLITE3_ASSOC)) != false) {
             $array[] = $row;
         }
 
@@ -72,19 +73,26 @@ class DataBase
             return false;
         }
 
-        return $resultSet->fetch_assoc();
+        return $resultSet->fetchArray(SQLITE3_ASSOC);
     }
 
     private function getResultSet(Select $select, $zero, $one)
     {
-        $resultSet = $this->mysqli->query($select);
-        if (!$resultSet) {
+        $resultSet = $this->sqlite->query($select);
+
+        if ($resultSet === false) {
             return false;
         }
-        if ((!$zero) && ($resultSet->num_rows == 0)) {
+
+        $num_rows = 0;
+        while ($resultSet->fetchArray(SQLITE3_ASSOC)) {
+            $num_rows++;
+        }
+
+        if ((!$zero) && ($num_rows == 0)) {
             return false;
         }
-        if ((!$one) && ($resultSet->num_rows == 1)) {
+        if ((!$one) && ($num_rows == 1)) {
             return false;
         }
 
@@ -94,8 +102,8 @@ class DataBase
 
     public function __destruct()
     {
-        if (($this->mysqli) && (!$this->mysqli->connect_errno)) {
-            $this->mysqli->close();
+        if ($this->sqlite) {
+            $this->sqlite->close();
         }
     }
 
@@ -108,7 +116,7 @@ class DataBase
         $tableName = $this->getTableName($tableName);
         $fields = '(';
         $values = 'VALUES (';
-        $params = array();
+        $params = [];
         foreach ($row as $key => $value) {
             $fields .= "`$key`,";
             $values .= $this->sq . ',';
@@ -120,7 +128,7 @@ class DataBase
         $values .= ')';
         $query = "INSERT INTO `$tableName` $fields $values";
 
-        return $this->query($query, $params);
+        return $this->query($query, $params, 'insert');
     }
 
     public function update($tableName, $row, $where = false, $params = array())
@@ -130,7 +138,7 @@ class DataBase
         }
         $tableName = $this->getTableName($tableName);
         $query = "UPDATE `$tableName` SET ";
-        $paramsAdd = array();
+        $paramsAdd = [];
         foreach ($row as $key => $value) {
             $query .= "`$key` = " . $this->sq . ",";
             $paramsAdd[] = $value;
@@ -155,19 +163,24 @@ class DataBase
         return $this->query($query, $params);
     }
 
-    private function query($query, $params = false)
+    private function query($query, $params = false, $method = false)
     {
-        $success = $this->mysqli->query($this->getQuery($query, $params));
+
+        try {
+            $success = $this->sqlite->query($this->getQuery($query, $params));
+        } catch (Exception $e) {
+            return false;
+        }
 
         if (!$success) {
             return false;
         }
 
-        if ($this->mysqli->insert_id === 0) {
-            return true;
+        if ($method === 'insert') {
+            return $this->sqlite->lastInsertRowID();
         }
 
-        return $this->mysqli->insert_id;
+        return $this->sqlite->changes();
     }
 
 }

@@ -43,6 +43,13 @@ class Entity
         return false;
     }
 
+    private function getSelectFields()
+    {
+        $fields = array_keys($this->properties);
+        array_push($fields, "id");
+        return $fields;
+    }
+
     public function init($row)
     {
         foreach ($this->properties as $key => $value) {
@@ -334,12 +341,5 @@ class Entity
     protected function add($field, $default = null, $type = null)
     {
         $this->properties[$field] = array("value" => $default, "type" => $type);
-    }
-
-    private function getSelectFields()
-    {
-        $fields = array_keys($this->properties);
-        array_push($fields, "id");
-        return $fields;
     }
 }
