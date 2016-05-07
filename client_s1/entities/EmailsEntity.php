@@ -15,5 +15,6 @@ class EmailsEntity extends Entity
         $this->add('status');
         $this->add('accessed');
         $this->add('hash');
+        $this->add('sended_at');
     }
 }
