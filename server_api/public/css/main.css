@@ -1,0 +1,15 @@
+.dg-center-block {
+    float: none;
+    clear: both;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.dg-center-inline {
+    float: none;
+    clear: both;
+    display: inline;
+    margin-right: auto;
+    margin-left: auto;
+}

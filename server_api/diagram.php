@@ -1,5 +1,4 @@
 <?php
-echo 'Diagram';
 /**
 TODO: Главная задача:
 Просмотр статистики по отправки, переходов и отписок в день.
@@ -30,3 +29,8 @@ SERVER S2		3456				236					15
 SERVER S1 		1425				400					30
 SERVER S2		3456				236					15
 */
+
+require_once 'autoload.php';
+
+$view = new View('/views/');
+echo $view->render('main',['publicUrl' => Config::SITE_URL . '/public/', 'view' => $view]);

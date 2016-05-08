@@ -12,4 +12,9 @@ class EmailsSendedEntity extends Entity
         $this->add('status');
         $this->add('created');
     }
+    
+    public function getEmail()
+    {
+        return array_shift(EmailsEntity::findByIds([$this->id_email]));
+    }
 }

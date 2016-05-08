@@ -52,4 +52,9 @@ class EmailsEntity extends Entity
 
         return $emails;
     }
+    
+    public function __toString()
+    {
+        return property_exists($this,'email') ? (string) $this->email : '';
+    }
 }

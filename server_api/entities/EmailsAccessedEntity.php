@@ -13,4 +13,9 @@ class EmailsAccessedEntity extends Entity
         $this->add('user_agent');
         $this->add('created');
     }
+
+    public function getEmail()
+    {
+        return array_shift(EmailsEntity::findByIds([$this->id_email]));
+    }
 }

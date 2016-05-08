@@ -11,12 +11,12 @@
  * (емайлы для отсылки, данные о отсылки для учета переходов, статистика).
  * Статистика каждый час отправляет на главный сервер, очищая локальную базу.
  */
-//echo $_SERVER['HTTP_USER_AGENT'] . "\n\n";
 
 require_once 'autoload.php';
 
-//$controller = new RequestApiController();
-//print $controller->getEmailsAction();
-//print $controller->sendAccessedStatisticAction();
-//print $controller->sendSendedEmailsStatisticAction();
-//print $controller->sendUnsubscribedStatisticAction();
+$controller = new RequestApiController();
+
+print $controller->getEmailsAction();
+print $controller->sendAccessedStatisticAction();
+print $controller->sendSendedEmailsStatisticAction();
+print $controller->sendUnsubscribedStatisticAction();
