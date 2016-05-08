@@ -28,7 +28,7 @@
     </div>
 
     <div class="row">
-        <form class="form-inline" action="giagram.php" method="post">
+        <form class="form-inline" action="diagram.php" method="post">
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" name="from" class="form-control" id="from-date" placeholder="от: 2016-05-31"/>

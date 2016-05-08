@@ -8,8 +8,8 @@ abstract class Config
     const SITE_URL = 'http://localhost/subscription_service/server_api';
 
     const DB_HOST = 'localhost';
-    const DB_USER = 'root';
-    const DB_PASSWORD = '';
+    const DB_USER = 'webdev';
+    const DB_PASSWORD = 'webdev';
     const DB_NAME = 'email_server';
     const DB_SYM_QUERY = '?';
 

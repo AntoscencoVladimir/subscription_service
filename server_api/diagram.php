@@ -32,5 +32,5 @@ SERVER S2		3456				236					15
 
 require_once 'autoload.php';
 
-$view = new View('/views/');
+$view = new View(API_SERVER_ROOT_DIR . '/views/');
 echo $view->render('main',['publicUrl' => Config::SITE_URL . '/public/', 'view' => $view]);

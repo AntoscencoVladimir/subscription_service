@@ -8,7 +8,7 @@
 
 require_once 'autoload.php';
 
-$view = new View('/views/');
+$view = new View( MAIL_CLIENT_ROOT_DIR . '/views/');
 if (isset($_GET['h'])) {
     $entity = new EmailsEntity();
     $entity->findOneByField('hash', $_GET['h']);
