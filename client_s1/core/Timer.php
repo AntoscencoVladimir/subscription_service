@@ -1,6 +1,7 @@
 <?php
 
-class Timer {
+class Timer
+{
 
     private $seconds;
 
@@ -24,10 +25,10 @@ class Timer {
                 $division = 60;
                 break;
             case 'h':
-                $division = 60*60;
+                $division = 60 * 60;
                 break;
             case 'd':
-                $division = 60*60*24;
+                $division = 60 * 60 * 24;
                 break;
             default:
                 $division = 1;
@@ -36,7 +37,7 @@ class Timer {
 
         $time_end = microtime(true);
 
-        return ($time_end - $this->seconds)/$division;
+        return ($time_end - $this->seconds) / $division;
 
     }
 

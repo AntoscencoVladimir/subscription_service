@@ -43,9 +43,9 @@
 
 </header>
 
-<?php echo $view->render('partial_table_sended', ['title'=> 'Отправлено писем за период:', 'entity' => null])?>
-<?php echo $view->render('partial_table_accessed', ['title'=> 'Выполнено переходов  за период:', 'entity'=> null])?>
-<?php echo $view->render('partial_table_unsubscribed', ['title'=> 'Выполнено отписок за период:', 'entity'=> null])?>
+<?php echo $view->render('partial_table_sended', ['title' => 'Отправлено писем за период:', 'entity' => null]) ?>
+<?php echo $view->render('partial_table_accessed', ['title' => 'Выполнено переходов  за период:', 'entity' => null]) ?>
+<?php echo $view->render('partial_table_unsubscribed', ['title' => 'Выполнено отписок за период:', 'entity' => null]) ?>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

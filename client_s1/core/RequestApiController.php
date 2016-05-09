@@ -20,7 +20,7 @@ class RequestApiController
         $emailsUnsubscribedData = [];
         $entities = EmailsEntity::findByField(EmailsEntity::$table, 'EmailsEntity', 'unsubscribed', 1);
         if (!empty($entities)) {
-            $i=0;
+            $i = 0;
             foreach ($entities as $entity) {
                 $emailsUnsubscribedData[$i]['country'] = $entity->country;
                 $emailsUnsubscribedData[$i]['email'] = $entity->email;
@@ -46,7 +46,7 @@ class RequestApiController
         $emailsSendedData = [];
         $entities = EmailsEntity::getSendedEmails();
         if (!empty($entities)) {
-            $i=0;
+            $i = 0;
             foreach ($entities as $entity) {
                 $emailsSendedData[$i]['email'] = $entity->email;
                 $emailsSendedData[$i]['status'] = $entity->status;
@@ -69,7 +69,7 @@ class RequestApiController
         $emailsAccessedData = [];
         $entities = EmailsEntity::findByField(EmailsEntity::$table, 'EmailsEntity', 'accessed', 1);
         if (!empty($entities)) {
-            $i=0;
+            $i = 0;
             foreach ($entities as $entity) {
                 $emailsAccessedData[$i]['country'] = $entity->country;
                 $emailsAccessedData[$i]['created'] = $entity->sended_at;

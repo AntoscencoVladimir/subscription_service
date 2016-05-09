@@ -193,7 +193,8 @@ class Entity
         $ask = true,
         $count = false,
         $offset = false
-    ) {
+    )
+    {
         $select = new Select(self::$db);
         $select->from($tableName, "*");
         if ($where) {
@@ -232,7 +233,8 @@ class Entity
         $ask = true,
         $count = false,
         $offset = false
-    ) {
+    )
+    {
         return self::getAllOnWhere($tableName, $class, "`$field` = " . self::$db->getSq(), [$value], $order, $ask,
             $count, $offset);
     }
@@ -246,7 +248,8 @@ class Entity
         $ask = true,
         $count = false,
         $offset = false
-    ) {
+    )
+    {
         $select = new Select(self::$db);
         $select->from($table_name, "*");
         if ($where) {

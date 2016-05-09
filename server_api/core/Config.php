@@ -13,6 +13,6 @@ abstract class Config
     const DB_NAME = 'email_server';
     const DB_SYM_QUERY = '?';
 
-   // const DIR_IMG = '/images/';
+    // const DIR_IMG = '/images/';
 
 }

@@ -45,4 +45,9 @@ class EmailsEntity extends Entity
         }
         return [];
     }
+
+    public static function clearTable()
+    {
+        return self::$db->delete(self::$table);
+    }
 }

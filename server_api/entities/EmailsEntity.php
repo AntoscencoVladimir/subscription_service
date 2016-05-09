@@ -22,7 +22,7 @@ class EmailsEntity extends Entity
             'reserved_server',
             'reserved_date',
         ])
-            ->leftJoin(EmailsUnsubscribedEntity::$table,[ self::$table . '.id' => EmailsUnsubscribedEntity::$table . '.id_email'])
+            ->leftJoin(EmailsUnsubscribedEntity::$table, [self::$table . '.id' => EmailsUnsubscribedEntity::$table . '.id_email'])
             ->where(self::$table . '.reserved_server IS NULL ' .
                 'AND ' . self::$table . '.reserved_date IS NULL ' .
                 'AND ' . EmailsUnsubscribedEntity::$table . '.id_email IS NULL '
@@ -52,9 +52,9 @@ class EmailsEntity extends Entity
 
         return $emails;
     }
-    
+
     public function __toString()
     {
-        return property_exists($this,'email') ? (string) $this->email : '';
+        return property_exists($this, 'email') ? (string)$this->email : '';
     }
 }

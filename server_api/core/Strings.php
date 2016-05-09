@@ -1,6 +1,7 @@
 <?php
 
-class Strings {
+class Strings
+{
 
     public static function underscoreToCamelCase($string, $capitalizeFirstCharacter = false)
     {

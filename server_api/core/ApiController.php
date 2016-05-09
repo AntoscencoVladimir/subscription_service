@@ -24,7 +24,7 @@ class ApiController
      */
     public function setEmailsAccessedAction(Request $request)
     {
-        if (!$request->hasProperty('emails_accessed')){
+        if (!$request->hasProperty('emails_accessed')) {
             return false;
         }
         $emailsData = $request->emails_accessed;
@@ -62,8 +62,8 @@ class ApiController
 
             return false;
         }
-        $emailsData = $request->emails_sended ;
-        $clientId = $request->s ;
+        $emailsData = $request->emails_sended;
+        $clientId = $request->s;
         if (!is_array($emailsData) || empty($emailsData) || preg_match('/^\d+$/', $clientId) === false) {
 
             return false;
@@ -97,7 +97,7 @@ class ApiController
             return false;
         }
         $emailsData = $request->emails_unsubscribed;
-            
+
         if (!is_array($emailsData) || empty($emailsData)) {
 
             return false;

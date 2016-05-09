@@ -94,7 +94,7 @@ class Select
     public function leftJoin($table, $fieldPair)
     {
         reset($fieldPair);
-        $this->join = "LEFT JOIN `$table` ON `" . preg_replace('/\./', '`.`', key($fieldPair)) . "`=`" . preg_replace('/\./', '`.`',array_values($fieldPair)[0]) .'`' ;
+        $this->join = "LEFT JOIN `$table` ON `" . preg_replace('/\./', '`.`', key($fieldPair)) . "`=`" . preg_replace('/\./', '`.`', array_values($fieldPair)[0]) . '`';
 
         return $this;
     }
@@ -114,7 +114,7 @@ class Select
     public function __toString()
     {
         if ($this->from) {
-            $ret = 'SELECT ' . $this->from . ' ' . $this->join . ' ' . $this->where .' ' . $this->order . ' ' . $this->limit;
+            $ret = 'SELECT ' . $this->from . ' ' . $this->join . ' ' . $this->where . ' ' . $this->order . ' ' . $this->limit;
         } else {
             $ret = '';
         }

@@ -7,7 +7,7 @@ class Config
     const SERVER_API_URL = 'http://localhost/subscription_service/server_api/api.php';
     const CLIENT_SITE_URL = 'http://localhost/subscription_service/client_s1';
     const GET_EMAILS_LIMIT = 2;
-    const FROM_EMAIL =  'webmaster@example.com';
+    const FROM_EMAIL = 'webmaster@example.com';
     const FROM_NAME = 'webmaster';
     const STATISTICS_TIMEOUT = 3600;
     //const STATISTICS_TIMEOUT = 1;
