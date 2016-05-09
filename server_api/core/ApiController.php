@@ -8,36 +8,26 @@ class ApiController
     }
 
     /**
-     * @param $limit int
-     * @param $clientId int
-     *
      * @return array|bool
      */
-    public function getEmails($limit, $clientId)
+    public function getEmailsAction(Request $request)
     {
-        if (preg_match('/^\d+$/', $limit) && preg_match('/^\d+$/', $clientId)) {
-            return EmailsEntity::reserveEmailsForClient($limit, $clientId);
+        if (preg_match('/^\d+$/', $request->limit) && preg_match('/^\d+$/', $request->s)) {
+            return EmailsEntity::reserveEmailsForClient($request->limit, $request->s);
         }
 
         return false;
     }
 
     /**
-     * @param $emailsData array example:
-     * [
-     *      [
-     *          "country" => "MDA",
-     *          "created" => "2016-05-06 12:12:12",
-     *          "email" => "email1@spam4.me",
-     *          "ip" => "127.0.0.1",
-     *          "user_agent" => "chromium"
-     *      ],
-     * ]
-     *
      * @return int|bool update counter
      */
-    public function setEmailsAccessed($emailsData)
+    public function setEmailsAccessedAction(Request $request)
     {
+        if (!$request->hasProperty('emails_accessed')){
+            return false;
+        }
+        $emailsData = $request->emails_accessed;
         if (!is_array($emailsData) || empty($emailsData)) {
 
             return false;
@@ -64,19 +54,16 @@ class ApiController
     }
 
     /**
-     * @param $emailsData array example:
-     * [
-     *      [
-     *          "email" => "email1@spam4.me",
-     *          "status" => true
-     *      ],
-     * ]
-     * @param $clientId  int sender client id
-     *
-     * @return int update counter
+     * @return int|bool update counter
      */
-    public function setEmailsSended($emailsData, $clientId)
+    public function setEmailsSendedAction(Request $request)
     {
+        if (!$request->hasProperty('emails_sended') || !$request->hasProperty('s')) {
+
+            return false;
+        }
+        $emailsData = $request->emails_sended ;
+        $clientId = $request->s ;
         if (!is_array($emailsData) || empty($emailsData) || preg_match('/^\d+$/', $clientId) === false) {
 
             return false;
@@ -101,26 +88,22 @@ class ApiController
     }
 
     /**
-     * @param $emailsData array example:
-     * [
-     *      [
-     *          "email" => "email1@spam4.me",
-     *          "ip" => "127.0.0.1",
-     *          "country" => "MDA",
-     *          "user_agent" => "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko"
-     *      ],
-     * ]
-     *
      * @return bool|int
      */
-    public function setEmailsUnsubsribed($emailsData)
+    public function setEmailsUnsubsribedAction(Request $request)
     {
-        $count = 0;
+        if (!$request->hasProperty('emails_unsubscribed')) {
+
+            return false;
+        }
+        $emailsData = $request->emails_unsubscribed;
+            
         if (!is_array($emailsData) || empty($emailsData)) {
 
             return false;
         }
 
+        $count = 0;
         foreach ($emailsData as $emailData) {
             $entity = new EmailsEntity();
             if ($entity->findOneByField('email', $emailData['email'])) {

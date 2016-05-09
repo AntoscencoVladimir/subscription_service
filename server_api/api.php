@@ -14,35 +14,18 @@ require_once 'autoload.php';
 
 $request = new Request();
 $api = new ApiController();
-$result = false;
+
+$result = ['result' => false, 'error' => true];
 
 if ($request->hasProperty('apikey') && $request->apikey === Config::SECRET) {
     if ($request->hasProperty('action')) {
-        switch ($request->action) {
-            case 'get_emails':
-                $result['result'] = $api->getEmails($request->limit, $request->s);
-                $result['error'] = false;
-                break;
-            case 'set_emails_accessed':
-                $result['result'] = $api->setEmailsAccessed($request->emails_accessed);
-                $result['error'] = false;
-                break;
-            case 'set_emails_sended':
-                $result['result'] = $api->setEmailsSended($request->emails_sended, $request->s);
-                $result['error'] = false;
-                break;
-            case 'set_emails_unsubsribed':
-                $result['result'] = $api->setEmailsUnsubsribed($request->emails_unsubscribed);
-                $result['error'] = false;
-                break;
-            default:
-                $result = ['result' => false, 'error' => true];
-                break;
+        $action = Strings::underscoreToCamelCase($request->action) . 'Action';
+        if (method_exists($api, $action)) {
+            $result['result'] = call_user_func([$api, $action], $request);
+            $result['error'] = false;
         }
     }
 
-} else {
-    $result = ['result' => false, 'error' => true];
 }
 
 header('Content-Type: application/json;charset=utf-8');
