@@ -17,6 +17,7 @@ if (isset($_GET['h'])) {
         $entity->user_agent = $_SERVER['HTTP_USER_AGENT'];
         $entity->country = geoip_country_code3_by_name(Tools::getClientIp());
         $entity->unsubscribed = 1;
+        $entity->unsubscribed_at = date('Y-m-d H:i:s');
         if ($entity->save()) {
             $view->render('template_success_unsubscribed', ['email' => $entity->email]);
             exit(0);

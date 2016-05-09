@@ -4,7 +4,7 @@ class Entity
 {
 
 
-    /** @var AbstractDataBase */
+    /** @var DataBase */
     protected static $db = null;
     private $id = null;
     private $properties = [];

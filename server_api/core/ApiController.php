@@ -44,7 +44,7 @@ class ApiController
                 $emailAccessed->ip = $emailData['ip'];
                 $emailAccessed->country = $emailData['country'];
                 $emailAccessed->user_agent = $emailData['user_agent'];
-                $emailAccessed->created = date('Y-m-d H:i:s');
+                $emailAccessed->created = $emailData['created'];
                 $emailAccessed->save();
                 $count++;
             }
@@ -78,7 +78,7 @@ class ApiController
                 $emailSended->id_email = $entity->getId();
                 $emailSended->sender_server = $clientId;
                 $emailSended->status = $emailData['status'];
-                $emailSended->created = date('Y-m-d H:i:s');
+                $emailSended->created = $emailData['created'];
                 $emailSended->save();
                 $count++;
             }
@@ -114,7 +114,7 @@ class ApiController
                 $emailUnsubscribed->ip = $emailData['ip'];
                 $emailUnsubscribed->country = $emailData['country'];
                 $emailUnsubscribed->user_agent = $emailData['user_agent'];
-                $emailUnsubscribed->created = date('Y-m-d H:i:s');
+                $emailUnsubscribed->created = $emailData['created'];
                 $emailUnsubscribed->save();
                 $count++;
             }

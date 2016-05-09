@@ -5,9 +5,9 @@ class Mail
 
     private $view;
     private $from;
-    private $from_name = "";
-    private $type = "text/html";
-    private $encoding = "utf-8";
+    private $from_name = '';
+    private $type = 'text/html';
+    private $encoding = 'utf-8';
 
     public function __construct(View $view, $from)
     {
@@ -53,6 +53,7 @@ class Mail
         if ($this->type = "text/html") {
             $body = nl2br($body);
         }
+
         return mail($to, $subject, $body, $headers);
     }
 

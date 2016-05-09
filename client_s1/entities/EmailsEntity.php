@@ -16,6 +16,8 @@ class EmailsEntity extends Entity
         $this->add('accessed');
         $this->add('hash');
         $this->add('sended_at');
+        $this->add('accessed_at');
+        $this->add('unsubscribed_at');
     }
 
 
@@ -32,7 +34,9 @@ class EmailsEntity extends Entity
             'status',
             'accessed',
             'hash',
-            'sended_at'
+            'sended_at',
+            'accessed_at',
+            'unsubscribed_at'
         ])->where('sended_at IS NOT NULL');
         $data = self::$db->select($select);
 

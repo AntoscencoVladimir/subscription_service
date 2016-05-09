@@ -18,6 +18,7 @@ if (isset($_GET['h'])) {
         $entity->user_agent = $_SERVER['HTTP_USER_AGENT'];
         $entity->accessed = 1;
         $entity->country = geoip_country_code3_by_name(Tools::getClientIp());
+        $entity->accessed_at = date('Y-m-d H:i:s');
         $entity->save();
     }
 }

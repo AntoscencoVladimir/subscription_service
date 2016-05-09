@@ -26,6 +26,7 @@ class RequestApiController
                 $emailsUnsubscribedData[$i]['email'] = $entity->email;
                 $emailsUnsubscribedData[$i]['ip'] = $entity->ip;
                 $emailsUnsubscribedData[$i]['user_agent'] = $entity->user_agent;
+                $emailsUnsubscribedData[$i]['created'] = $entity->unsubscribed_at;
                 $i++;
             }
         }
@@ -49,6 +50,7 @@ class RequestApiController
             foreach ($entities as $entity) {
                 $emailsSendedData[$i]['email'] = $entity->email;
                 $emailsSendedData[$i]['status'] = $entity->status;
+                $emailsSendedData[$i]['created'] = $entity->sended_at;
                 $i++;
             }
         }
@@ -74,6 +76,8 @@ class RequestApiController
                 $emailsAccessedData[$i]['email'] = $entity->email;
                 $emailsAccessedData[$i]['ip'] = $entity->ip;
                 $emailsAccessedData[$i]['user_agent'] = $entity->user_agent;
+                $emailsAccessedData[$i]['created'] = $entity->accessed_at;
+
                 $i++;
             }
         }
