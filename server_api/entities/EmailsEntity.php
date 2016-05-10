@@ -55,6 +55,6 @@ class EmailsEntity extends Entity
 
     public function __toString()
     {
-        return property_exists($this, 'email') ? (string)$this->email : '';
+        return (string)$this->email;
     }
 }

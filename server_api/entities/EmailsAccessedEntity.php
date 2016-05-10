@@ -16,6 +16,28 @@ class EmailsAccessedEntity extends Entity
 
     public function getEmail()
     {
-        return array_shift(EmailsEntity::findByIds([$this->id_email]));
+        $entity = new EmailsEntity();
+        $entity->findOneById($this->id_email);
+
+        if ($entity->getId()) {
+            return $entity;
+        }
+        return false;
+    }
+
+    public static function findAllByRange($from, $to)
+    {
+        $select = new Select(self::$db);
+        $select->from(self::$table, ['id', 'id_email', 'ip', 'country', 'user_agent', 'created'])
+            ->where(' `created` BETWEEN ? AND ? ', [$from, $to]);
+        $data = self::$db->select($select);
+
+        if ($data) {
+
+            return self::createCollection(get_called_class(), $data);
+        }
+
+        return [];
+
     }
 }

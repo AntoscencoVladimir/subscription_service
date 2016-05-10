@@ -1,29 +1,27 @@
-<section class="container">
-    <h2><?php echo $title ?></h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-        </tr>
-        <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td>mary@example.com</td>
-        </tr>
-        <tr>
-            <td>July</td>
-            <td>Dooley</td>
-            <td>july@example.com</td>
-        </tr>
-        </tbody>
-    </table>
-</section>
+<?php if (!empty($entities)) : ?>
+    <section class="container">
+        <h2>Выполнено переходов за период:</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>E-mail</th>
+                <th>IP</th>
+                <th>Страна</th>
+                <th>Браузер</th>
+                <th>Дата перехода по ссылке</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($entities as $entity) : ?>
+                <tr>
+                    <td><?php echo $entity->getEmail() ?></td>
+                    <td><?php echo $entity->ip ?></td>
+                    <td><?php echo $entity->country ?></td>
+                    <td><?php echo $entity->user_agent ?></td>
+                    <td><?php echo $entity->created ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+<?php endif; ?>

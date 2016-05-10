@@ -22,4 +22,17 @@ class View
             echo ob_get_clean();
         }
     }
+    
+    public function renderAction($controller, $action, $params = [])
+    {
+        if (class_exists($controller)) {
+            $controller = new $controller();
+            if (method_exists($controller,$action .'Action')){
+                $request = new Request();
+                $data = call_user_func_array([$controller, $action . 'Action'], [$request, $params]);
+                return $this->render($data['template'],$data['params'], true);
+            }
+        }
+            
+    }
 }

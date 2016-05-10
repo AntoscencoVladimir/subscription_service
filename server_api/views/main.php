@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Diagrams</title>
+    <title>Статистика</title>
 
     <!-- Bootstrap -->
     <link href="<?php echo $publicUrl ?>css/bootstrap.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 
     <div class="row">
         <div class="dg-center-block col-md-4">
-            <h1 style="text-align: center">Диаграммы</h1>
+            <h1 style="text-align: center">Статистика работы серверов</h1>
         </div>
     </div>
 
@@ -43,12 +43,13 @@
 
 </header>
 
-<?php echo $view->render('partial_table_sended', ['title' => 'Отправлено писем за период:', 'entity' => null]) ?>
-<?php echo $view->render('partial_table_accessed', ['title' => 'Выполнено переходов  за период:', 'entity' => null]) ?>
-<?php echo $view->render('partial_table_unsubscribed', ['title' => 'Выполнено отписок за период:', 'entity' => null]) ?>
+<?php echo $view->renderAction('DiagramController', 'tableSended'); ?>
+<?php echo $view->renderAction('DiagramController', 'tableAccessed'); ?>
+<?php echo $view->renderAction('DiagramController', 'tableUnsubscribed'); ?>
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="<?php echo $publicUrl ?>js/bootstrap.min.js"></script>
+<footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="<?php echo $publicUrl ?>js/bootstrap.min.js"></script>
+</footer>
 </body>
 </html>

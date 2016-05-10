@@ -33,4 +33,4 @@
 require_once 'autoload.php';
 
 $view = new View(API_SERVER_ROOT_DIR . '/views/');
-echo $view->render('main', ['publicUrl' => Config::SITE_URL . '/public/', 'view' => $view]);
+$view->render('main', ['publicUrl' => Config::SITE_URL . '/public/', 'view' => $view]);
